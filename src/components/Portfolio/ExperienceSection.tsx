@@ -1,9 +1,17 @@
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Building2, Calendar } from "lucide-react";
+import { portfolioApi, type Experience } from "@/services/portfolioApi";
 
 const ExperienceSection = () => {
-  const experiences = [
+  const [experiences, setExperiences] = useState<Experience[]>([]);
+
+  useEffect(() => {
+    setExperiences(portfolioApi.getExperiences());
+  }, []);
+
+  const legacyExperiences = [
     {
       company: "SquareShift Company",
       position: "Full Stack Developer",
@@ -57,34 +65,11 @@ const ExperienceSection = () => {
                   {exp.description}
                 </p>
                 
-                {/* Technologies */}
-                <div>
-                  <h4 className="font-semibold mb-3 text-foreground">Technologies & Tools</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {exp.technologies.map((tech, techIndex) => (
-                      <Badge 
-                        key={techIndex} 
-                        variant="secondary" 
-                        className="bg-primary/20 text-primary hover:bg-primary hover:text-primary-foreground transition-colors"
-                      >
-                        {tech}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-                
-                {/* Key Achievements */}
-                <div>
-                  <h4 className="font-semibold mb-3 text-foreground">Key Achievements</h4>
-                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {exp.achievements.map((achievement, achIndex) => (
-                      <li key={achIndex} className="flex items-start gap-2 text-muted-foreground">
-                        <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
-                        <span>{achievement}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                {exp.current && (
+                  <Badge className="bg-gradient-primary text-primary-foreground">
+                    Current Position
+                  </Badge>
+                )}
               </CardContent>
             </Card>
           ))}

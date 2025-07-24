@@ -1,13 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink, Github, Eye } from "lucide-react";
+import { portfolioApi, type Project } from "@/services/portfolioApi";
 
 const ProjectsSection = () => {
   const [filter, setFilter] = useState("all");
+  const [projects, setProjects] = useState<Project[]>([]);
 
-  const projects = [
+  useEffect(() => {
+    setProjects(portfolioApi.getProjects());
+  }, []);
+
+  const legacyProjects = [
     {
       title: "E-Commerce Platform",
       description: "Full-stack e-commerce solution with payment integration, inventory management, and admin dashboard.",
@@ -105,7 +111,7 @@ const ProjectsSection = () => {
                   alt={project.title}
                   className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
                 />
-                {project.featured && (
+                {project.status === 'published' && (
                   <Badge className="absolute top-4 left-4 bg-gradient-primary">
                     Featured
                   </Badge>
