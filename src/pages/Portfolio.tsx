@@ -3,6 +3,9 @@ import HeroSection from "@/components/Portfolio/HeroSection";
 import ExperienceSection from "@/components/Portfolio/ExperienceSection";
 import SkillsSection from "@/components/Portfolio/SkillsSection";
 import ProjectsSection from "@/components/Portfolio/ProjectsSection";
+import CompanyProjectsSection from "@/components/Portfolio/CompanyProjectsSection";
+import AchievementsSection from "@/components/Portfolio/AchievementsSection";
+import BlogsSection from "@/components/Portfolio/BlogsSection";
 import ContactSection from "@/components/Portfolio/ContactSection";
 
 const Portfolio = () => {
@@ -16,6 +19,9 @@ const Portfolio = () => {
         <ExperienceSection />
         <SkillsSection />
         <ProjectsSection />
+        <CompanyProjectsSection />
+        <AchievementsSection />
+        <BlogsSection />
         <ContactSection />
       </main>
       

@@ -1,9 +1,19 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Github, Linkedin, Mail, Download } from "lucide-react";
+import { Github, Linkedin, Mail, Download, Code } from "lucide-react";
 import heroBackground from "@/assets/hero-bg.jpg";
 import profilePhoto from "@/assets/profile-photo.jpg";
+import { portfolioApi, type Profile } from "@/services/portfolioApi";
 
 const HeroSection = () => {
+  const [profile, setProfile] = useState<Profile | null>(null);
+
+  useEffect(() => {
+    setProfile(portfolioApi.getProfile());
+  }, []);
+
+  if (!profile) return null;
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
@@ -24,7 +34,7 @@ const HeroSection = () => {
               <div className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-primary/20 shadow-glow">
                 <img 
                   src={profilePhoto} 
-                  alt="Himal - Profile Photo" 
+                  alt={`${profile.name} - Profile Photo`} 
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -33,14 +43,13 @@ const HeroSection = () => {
           </div>
           
           <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
-            Himal
+            {profile.name}
           </h1>
           <h2 className="text-2xl md:text-3xl text-muted-foreground mb-4">
-            Full Stack Developer
+            {profile.title}
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Crafting digital experiences at SquareShift Company for 2+ years. 
-            Passionate about building scalable web applications and innovative solutions.
+            {profile.description}
           </p>
           
           {/* Action Buttons */}
@@ -57,13 +66,47 @@ const HeroSection = () => {
           
           {/* Social Links */}
           <div className="flex justify-center gap-6">
-            <Button variant="ghost" size="icon" className="hover:text-primary hover:scale-110 transition-all duration-300">
-              <Github className="h-6 w-6" />
-            </Button>
-            <Button variant="ghost" size="icon" className="hover:text-primary hover:scale-110 transition-all duration-300">
-              <Linkedin className="h-6 w-6" />
-            </Button>
-            <Button variant="ghost" size="icon" className="hover:text-primary hover:scale-110 transition-all duration-300">
+            {profile.github && (
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="hover:text-primary hover:scale-110 transition-all duration-300"
+                asChild
+              >
+                <a href={profile.github} target="_blank" rel="noopener noreferrer">
+                  <Github className="h-6 w-6" />
+                </a>
+              </Button>
+            )}
+            {profile.linkedin && (
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="hover:text-primary hover:scale-110 transition-all duration-300"
+                asChild
+              >
+                <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">
+                  <Linkedin className="h-6 w-6" />
+                </a>
+              </Button>
+            )}
+            {profile.leetcode && (
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="hover:text-primary hover:scale-110 transition-all duration-300"
+                asChild
+              >
+                <a href={profile.leetcode} target="_blank" rel="noopener noreferrer">
+                  <Code className="h-6 w-6" />
+                </a>
+              </Button>
+            )}
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="hover:text-primary hover:scale-110 transition-all duration-300"
+            >
               <Mail className="h-6 w-6" />
             </Button>
           </div>

@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus, Edit, Trash2, Eye, Upload, ExternalLink, Github } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { portfolioApi, type Project, type Skill, type Experience } from "@/services/portfolioApi";
+import { portfolioApi, type Project, type Skill, type Experience, type Blog, type Achievement, type CompanyProject } from "@/services/portfolioApi";
 import { EditDialog, FormField, NumberField } from "@/components/ui/edit-dialog";
 
 const AdminV2 = () => {
@@ -16,6 +16,9 @@ const AdminV2 = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [skills, setSkills] = useState<Skill[]>([]);
   const [experiences, setExperiences] = useState<Experience[]>([]);
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [achievements, setAchievements] = useState<Achievement[]>([]);
+  const [companyProjects, setCompanyProjects] = useState<CompanyProject[]>([]);
 
   // Dialog states
   const [projectDialog, setProjectDialog] = useState({ isOpen: false, editingId: null as number | null });
@@ -52,6 +55,9 @@ const AdminV2 = () => {
     setProjects(portfolioApi.getProjects());
     setSkills(portfolioApi.getSkills());
     setExperiences(portfolioApi.getExperiences());
+    setBlogs(portfolioApi.getBlogs());
+    setAchievements(portfolioApi.getAchievements());
+    setCompanyProjects(portfolioApi.getCompanyProjects());
   }, []);
 
   // Project handlers
@@ -213,10 +219,13 @@ const AdminV2 = () => {
 
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-4 mb-8">
+          <TabsList className="grid w-full grid-cols-7 mb-8">
             <TabsTrigger value="projects">Projects ({projects.length})</TabsTrigger>
             <TabsTrigger value="skills">Skills ({skills.length})</TabsTrigger>
             <TabsTrigger value="experience">Experience ({experiences.length})</TabsTrigger>
+            <TabsTrigger value="company">Company ({companyProjects.length})</TabsTrigger>
+            <TabsTrigger value="achievements">Achievements ({achievements.length})</TabsTrigger>
+            <TabsTrigger value="blogs">Blogs ({blogs.length})</TabsTrigger>
             <TabsTrigger value="resume">Resume</TabsTrigger>
           </TabsList>
 
