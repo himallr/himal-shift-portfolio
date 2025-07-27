@@ -10,7 +10,7 @@ const ProjectsSection = () => {
   const [projects, setProjects] = useState<Project[]>([]);
 
   useEffect(() => {
-    setProjects(portfolioApi.getProjects());
+    portfolioApi.getProjects().then(setProjects);
   }, []);
 
   const legacyProjects = [
@@ -107,11 +107,11 @@ const ProjectsSection = () => {
               {/* Project Image */}
               <div className="relative overflow-hidden">
                 <img 
-                  src={project.image} 
+                  src={project.image_url || "/placeholder.svg"} 
                   alt={project.title}
                   className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
                 />
-                {project.status === 'published' && (
+                {project.is_public && (
                   <Badge className="absolute top-4 left-4 bg-gradient-primary">
                     Featured
                   </Badge>

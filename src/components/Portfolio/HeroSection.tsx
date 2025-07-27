@@ -9,7 +9,7 @@ const HeroSection = () => {
   const [profile, setProfile] = useState<Profile | null>(null);
 
   useEffect(() => {
-    setProfile(portfolioApi.getProfile());
+    portfolioApi.getProfile().then(setProfile);
   }, []);
 
   if (!profile) return null;
@@ -66,38 +66,38 @@ const HeroSection = () => {
           
           {/* Social Links */}
           <div className="flex justify-center gap-6">
-            {profile.github && (
+            {profile.github_url && (
               <Button 
                 variant="ghost" 
                 size="icon" 
                 className="hover:text-primary hover:scale-110 transition-all duration-300"
                 asChild
               >
-                <a href={profile.github} target="_blank" rel="noopener noreferrer">
+                <a href={profile.github_url} target="_blank" rel="noopener noreferrer">
                   <Github className="h-6 w-6" />
                 </a>
               </Button>
             )}
-            {profile.linkedin && (
+            {profile.linkedin_url && (
               <Button 
                 variant="ghost" 
                 size="icon" 
                 className="hover:text-primary hover:scale-110 transition-all duration-300"
                 asChild
               >
-                <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">
+                <a href={profile.linkedin_url} target="_blank" rel="noopener noreferrer">
                   <Linkedin className="h-6 w-6" />
                 </a>
               </Button>
             )}
-            {profile.leetcode && (
+            {profile.leetcode_url && (
               <Button 
                 variant="ghost" 
                 size="icon" 
                 className="hover:text-primary hover:scale-110 transition-all duration-300"
                 asChild
               >
-                <a href={profile.leetcode} target="_blank" rel="noopener noreferrer">
+                <a href={profile.leetcode_url} target="_blank" rel="noopener noreferrer">
                   <Code className="h-6 w-6" />
                 </a>
               </Button>
